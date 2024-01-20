@@ -1,5 +1,9 @@
 # Websn PHP Bootstrap
 
+## Setup
+
+Copy the `config.php.example` file into the same directory and rename it `config.php`, then change the configuration to your enviorment.
+
 Each directory name in the direcory of the `worker.php` file will be compared to the path segment after the bootstrap segment.
 
 If a file in the directory and all sub directory matches it's content will be appened to the http response.

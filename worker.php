@@ -1,20 +1,10 @@
 <?php
-// #################################################
-// ##############    CONFIGURATION    ##############
-// #################################################
-
-// Required for Path and QueryString parsing, change as needed
-// web_data.php script at: https://raw.githubusercontent.com/Nomris/php-misc-libs/main/web_data.php
-const BOOTSTRAP_WEBDATA_INCLUDE = 'lib/web_data.php'; 
-// The amount of path segments (slash's "/") befor the bootstrap script, in the url
-const PRE_BOOTSTRAP_PATH_SEGMENTS = 1;
-
-
 // ##############################################################
 // #####                        CODE                        #####
 // ##### -------------------------------------------------- #####
 // ##### Don't touch this if you don't know waht your doing #####
 // ##############################################################
+require_once ('./config.php');
 
 if (file_exists(get_include_path() . '/' . BOOTSTRAP_WEBDATA_INCLUDE)) // Check that web_data.php exists
     require_once(BOOTSTRAP_WEBDATA_INCLUDE);
