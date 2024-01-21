@@ -89,10 +89,13 @@ $LATEST_MODIFIED = gmdate('D, d M Y H:i:s', $LATEST_MODIFIED);
 header("Last-Modified: $LATEST_MODIFIED");
 
 header('Cache-Control: must-revalidate');
-if ($LATEST_MODIFIED == $REQUEST->getHeader('If-Modified-Since'))
+if (isset($_SERVER['HTTP_IF-MODIFIED-SINCE']))
 {
-    http_response_code(304);
-    exit();
+    if ($LATEST_MODIFIED == $_SERVER['HTTP_IF-MODIFIED-SINCE'])
+    {
+        http_response_code(304);
+        exit();
+    }
 }
 
 header('Content-Length: ' . strlen($outBuffer));
