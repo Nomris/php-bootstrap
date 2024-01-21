@@ -78,9 +78,11 @@ if (file_exists($dir_path . '_metadata.ini'))
     $COMMENTS_ENABLED = $FLAGS['rname'] && !$GLOBALS['BOOTSTRAP_DISABLE_RELATIVE_NAME'] && $COMMENTS_ENABLED && isset($ini['comment_prefix']) && isset($ini['comment_suffix']);
 }
 
-$outBuffer = "";
+$outBuffer = travel_directory($dir_path);
 
-echo travel_directory($dir_path);
+header('Content-Length: ' . strlen($outBuffer));
+
+echo $outBuffer;
 
 function travel_directory(string $dir,)
 {
