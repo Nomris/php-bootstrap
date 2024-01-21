@@ -79,7 +79,21 @@ if (file_exists($dir_path . '_metadata.ini'))
     if (isset($GLOBALS['BOOTSTRAP_DISABLE_RELATIVE_NAME'])) $COMMENTS_ENABLED = $COMMENTS_ENABLED && $GLOBALS['BOOTSTRAP_DISABLE_RELATIVE_NAME'];
 }
 
+$LATEST_MODIFIED = 0;
+
 $outBuffer = travel_directory($dir_path);
+
+
+$LATEST_MODIFIED = gmdate('D, d M Y H:i:s', $LATEST_MODIFIED);
+
+header("Last-Modified: $LATEST_MODIFIED");
+
+header('Cache-Control: must-revalidate');
+if ($LATEST_MODIFIED == $REQUEST->getHeader('If-Modified-Since'))
+{
+    http_response_code(304);
+    exit();
+}
 
 header('Content-Length: ' . strlen($outBuffer));
 
@@ -87,12 +101,15 @@ echo $outBuffer;
 
 function travel_directory(string $dir,)
 {
-    global $FLAGS, $COMMENT_PREFIX, $COMMENT_SUFFIX, $EXTENSION_FILTER, $COMMENTS_ENABLED;
+    global $FLAGS, $COMMENT_PREFIX, $COMMENT_SUFFIX, $EXTENSION_FILTER, $COMMENTS_ENABLED, $LATEST_MODIFIED;
 
     $outputBuffer = '';
 
     foreach (scandir($dir) as $fsItem)
     {
+        $modified = filectime($fsItem);
+        if ($modified > $LATEST_MODIFIED) $LATEST_MODIFIED = $modified;
+
         if ($fsItem[0] == '.') continue;
         if ($fsItem[0] == '_') continue;
         if (!str_ends_with($fsItem, $EXTENSION_FILTER)) continue;
