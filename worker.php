@@ -75,8 +75,13 @@ if (file_exists($dir_path . '_metadata.ini'))
     $COMMENTS_ENABLED = $ini['support_comment'];
     if (!isset($ini['support_comment'])) $COMMENTS_ENABLED = true;
 
-    $COMMENTS_ENABLED = $FLAGS['rname'] && $COMMENTS_ENABLED && isset($ini['comment_prefix']) && isset($ini['comment_suffix']);
-    if (isset($GLOBALS['BOOTSTRAP_DISABLE_RELATIVE_NAME'])) $COMMENTS_ENABLED = $COMMENTS_ENABLED && $GLOBALS['BOOTSTRAP_DISABLE_RELATIVE_NAME'];
+    if (!isset($FLAGS['rname']))
+        $COMMENTS_ENABLED = false;
+    else
+    {
+        $COMMENTS_ENABLED = $COMMENTS_ENABLED && $FLAGS['rname'] && isset($ini['comment_prefix']) && isset($ini['comment_suffix']);
+        if (isset($GLOBALS['BOOTSTRAP_DISABLE_RELATIVE_NAME'])) $COMMENTS_ENABLED = $COMMENTS_ENABLED && $GLOBALS['BOOTSTRAP_DISABLE_RELATIVE_NAME'];
+    }
 }
 
 $LATEST_MODIFIED = 0;
