@@ -84,7 +84,7 @@ $LATEST_MODIFIED = 0;
 $outBuffer = travel_directory($dir_path);
 
 
-$LATEST_MODIFIED = gmdate('D, d M Y H:i:s', $LATEST_MODIFIED);
+$LATEST_MODIFIED = gmdate('D, d M Y H:i:s', $LATEST_MODIFIED) . ' GMT';
 
 header("Last-Modified: $LATEST_MODIFIED");
 
