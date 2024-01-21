@@ -110,7 +110,7 @@ function travel_directory(string $dir,)
 
     foreach (scandir($dir) as $fsItem)
     {
-        $modified = filectime($fsItem);
+        $modified = filemtime($fsItem);
         if ($modified > $LATEST_MODIFIED) $LATEST_MODIFIED = $modified;
 
         if ($fsItem[0] == '.') continue;
