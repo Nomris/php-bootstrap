@@ -20,14 +20,14 @@ if (count($req->Path) <= PRE_BOOTSTRAP_PATH_SEGMENTS)
 {
     echo 'No Resource-Type provided';
     http_response_code(401);
-    exit(401);
+    exit();
 }
 
 if (str_contains($TYPE, '..') || $req->Path[PRE_BOOTSTRAP_PATH_SEGMENTS] == '.')
 {
     echo 'Attempted locale file inclusion';
     http_response_code(401);
-    exit(401);
+    exit();
 }
 
 
@@ -50,7 +50,7 @@ if (strtolower($TYPE) == '.git')
 {
     echo 'Unknown Resource-Type provided';
     http_response_code(404);
-    exit(404);
+    exit();
 }
 
 $dir_path = __DIR__ . '/' . $TYPE . '/';
@@ -59,7 +59,7 @@ if (!is_dir($dir_path))
 {
     echo 'Unknown Resource-Type provided';
     http_response_code(404);
-    exit(404);
+    exit();
 }
 
 if (file_exists($dir_path . '_metadata.ini'))
