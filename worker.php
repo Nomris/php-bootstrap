@@ -121,11 +121,12 @@ function travel_directory(string $dir,)
         if ($fsItem[0] == '.') continue;
         if ($fsItem[0] == '_') continue;
         
-        if (is_dir($fsItem)) 
+        if (is_dir("$dir/$fsItem")) 
         {
-            $outputBuffer .= travel_directory($dir . '/' . $fsItem);
+            $outputBuffer .= travel_directory("$dir/$fsItem");
             continue;
         }
+
 
         if (!str_ends_with($fsItem, $EXTENSION_FILTER)) continue;
 
