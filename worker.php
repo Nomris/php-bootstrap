@@ -10,9 +10,12 @@ if (file_exists(get_include_path() . '/' . BOOTSTRAP_WEBDATA_INCLUDE)) // Check 
     require_once(BOOTSTRAP_WEBDATA_INCLUDE);
 else // If it dosen't try downloading it
 {
-    file_put_contents(__DIR__ . '.web_data.download.cache.php', file_get_contents('https://raw.githubusercontent.com/Nomris/php-misc-libs/main/web_data.php'));
-    require_once(__DIR__ . '.web_data.download.cache.php');
+    file_put_contents('/tmp/.web_data.download.cache.php', file_get_contents('https://raw.githubusercontent.com/Nomris/php-misc-libs/main/web_data.php'));
+    require_once('/tmp/.web_data.download.cache.php');
 }
+
+$eTag = md5_file(__FILE__);
+header("ETag: $eTag");
 
 $req = new RequestData();
 $TYPE = join(array: array_slice($req->Path, PRE_BOOTSTRAP_PATH_SEGMENTS), separator: '/');
@@ -94,13 +97,10 @@ $LATEST_MODIFIED = gmdate('D, d M Y H:i:s', $LATEST_MODIFIED) . ' GMT';
 header("Last-Modified: $LATEST_MODIFIED");
 
 header('Cache-Control: must-revalidate');
-if (isset($_SERVER['HTTP_IF-MODIFIED-SINCE']))
+if ($LATEST_MODIFIED == $req->getQuery('if-modified-since') && $eTAg == $req->getQuery('etag'))
 {
-    if ($LATEST_MODIFIED == $_SERVER['HTTP_IF-MODIFIED-SINCE'])
-    {
-        http_response_code(304);
-        exit();
-    }
+    http_response_code(304);
+    exit();
 }
 
 header('Content-Length: ' . strlen($outBuffer));
