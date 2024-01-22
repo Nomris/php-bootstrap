@@ -97,7 +97,7 @@ $LATEST_MODIFIED = gmdate('D, d M Y H:i:s', $LATEST_MODIFIED) . ' GMT';
 header("Last-Modified: $LATEST_MODIFIED");
 
 header('Cache-Control: must-revalidate');
-if ($LATEST_MODIFIED == $req->getQuery('if-modified-since') && $eTAg == $req->getQuery('etag'))
+if ($LATEST_MODIFIED == $req->getHeader('if-modified-since') && $eTAg == $req->getHeader('etag'))
 {
     http_response_code(304);
     exit();
