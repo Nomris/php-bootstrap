@@ -120,9 +120,15 @@ function travel_directory(string $dir,)
 
         if ($fsItem[0] == '.') continue;
         if ($fsItem[0] == '_') continue;
+        
+        if (is_dir($fsItem)) 
+        {
+            $outputBuffer .= travel_directory($dir . '/' . $fsItem);
+            continue;
+        }
+
         if (!str_ends_with($fsItem, $EXTENSION_FILTER)) continue;
 
-        if (is_dir($fsItem)) $outputBuffer .= travel_directory($dir . '/' . $fsItem);
 
         if ($COMMENTS_ENABLED) $outputBuffer .= $COMMENT_PREFIX . '+>> ' . substr($dir . $fsItem, strlen(__DIR__) + 1) . ' <<+' . $COMMENT_SUFFIX . "\n";
         $outputBuffer .= file_get_contents($dir . '/' . $fsItem) . "\n";
