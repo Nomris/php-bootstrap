@@ -4,7 +4,7 @@
 // ##### -------------------------------------------------- #####
 // ##### Don't touch this if you don't know waht your doing #####
 // ##############################################################
-require_once ('./config.php');
+require_once (__DIR__ . '/config.php');
 
 if (file_exists(get_include_path() . '/' . BOOTSTRAP_WEBDATA_INCLUDE)) // Check that web_data.php exists
     require_once(BOOTSTRAP_WEBDATA_INCLUDE);
@@ -18,15 +18,15 @@ $eTag = md5_file(__FILE__);
 header("ETag: $eTag");
 
 $req = new RequestData();
-$TYPE = join(array: array_slice($req->Path, PRE_BOOTSTRAP_PATH_SEGMENTS), separator: '/');
-if (count($req->Path) <= PRE_BOOTSTRAP_PATH_SEGMENTS)
+$TYPE = join(array: array_slice($req->Path, BOOTSTRAP_PRE_BOOTSTRAP_PATH_SEGMENTS), separator: '/');
+if (count($req->Path) <= BOOTSTRAP_PRE_BOOTSTRAP_PATH_SEGMENTS)
 {
     echo 'No Resource-Type provided';
     http_response_code(401);
     exit();
 }
 
-if (str_contains($TYPE, '..') || $req->Path[PRE_BOOTSTRAP_PATH_SEGMENTS] == '.')
+if (str_contains($TYPE, '..') || $req->Path[BOOTSTRAP_PRE_BOOTSTRAP_PATH_SEGMENTS] == '.')
 {
     echo 'Attempted locale file inclusion';
     http_response_code(401);
@@ -56,7 +56,7 @@ if (strtolower($TYPE) == '.git')
     exit();
 }
 
-$dir_path = __DIR__ . '/' . $TYPE . '/';
+$dir_path = BOOTSTRAP_DATA_DIR;
 
 if (!is_dir($dir_path))
 {
@@ -107,7 +107,7 @@ header('Content-Length: ' . strlen($outBuffer));
 
 echo $outBuffer;
 
-function travel_directory(string $dir,)
+function travel_directory(string $dir)
 {
     global $FLAGS, $COMMENT_PREFIX, $COMMENT_SUFFIX, $EXTENSION_FILTER, $COMMENTS_ENABLED, $LATEST_MODIFIED;
 

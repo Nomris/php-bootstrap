@@ -8,3 +8,5 @@
 const BOOTSTRAP_WEBDATA_INCLUDE = 'lib/web_data.php'; 
 // The amount of path segments (slash's "/") befor the bootstrap script, in the url
 const PRE_BOOTSTRAP_PATH_SEGMENTS = 1;
+// The directory where the files for bootstrap are placed
+const BOOTSTRAP_DATA_DIR = __DIR__ . '/../bootstrap-data';

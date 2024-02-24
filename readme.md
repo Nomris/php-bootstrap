@@ -2,9 +2,9 @@
 
 ## Setup
 
-Copy the `config.php.example` file into the same directory and rename it `config.php`, then change the configuration to your enviorment.
+Copy the `config.php.example` file into the same directory and rename it to `config.php`, then change the configuration to your enviorment.
 
-Each directory name in the direcory of the `worker.php` file will be compared to the path segment after the bootstrap segment.
+Each directory name in the direcory of the `BOOTSTRAP_DATA_DIR` directory will be compared to the path segment after the bootstrap segment.
 
 If a file in the directory and all sub directory matches it's content will be appened to the http response.
 
@@ -17,7 +17,7 @@ __Exceptions:__
 
 |Name|Description|
 |----|-----------|
-|RNAME|Shows the file path relative from the `worker.php` file to the source file. <br/> This behavior can be disabled by setting the global `BOOTSTRAP_DISABLE_RELATIVE_NAME = true`.|
+|RNAME|Shows the file path relative from the `BOOTSTRAP_DATA_DIR` directory to the source file. <br/> This behavior can be disabled by setting the global `BOOTSTRAP_DISABLE_RELATIVE_NAME = true`.|
 
 ## Metadata File
 The `_metadata.ini` in each directory can be used to specify information about the content.
